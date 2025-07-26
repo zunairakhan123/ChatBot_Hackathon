@@ -1,0 +1,6 @@
+streamlit
+nest_asyncio
+youtube-transcript-api
+requests
+beautifulsoup4
+groq
