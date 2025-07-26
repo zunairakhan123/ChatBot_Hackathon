@@ -1,42 +1,58 @@
 import nest_asyncio
-from youtube_transcript_api import YouTubeTranscriptApi
 import streamlit as st
 import os
-from groq import Groq
 import requests
+from youtube_transcript_api import YouTubeTranscriptApi
+from groq import Groq
 from bs4 import BeautifulSoup
 
 nest_asyncio.apply()
 
 # --- CONFIGURATION ---
-YOUTUBE_API_KEY = os.environ.get("YOUTUBE_API_KEY")  # Set in your HuggingFace Secrets
-channel_id = "UCsv3kmQ5k1eIRG2R9mWN"  # @icodeguru0
+YOUTUBE_API_KEY = os.environ.get("YOUTUBE_API_KEY")
+GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
+channel_id = "UCsv3kmQ5k1eIRG2R9mWN"  # iCodeGuru
 BASE_URL = "https://icode.guru"
 
-# Initialize Groq client once
-groq_client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
+groq_client = Groq(api_key=GROQ_API_KEY)
 
-# --- FUNCTION: Fetch recent video IDs from YouTube channel ---
+# --- Fetch recent video IDs from YouTube channel ---
 def get_latest_video_ids(channel_id, max_results=5):
     url = f"https://www.googleapis.com/youtube/v3/search?key={YOUTUBE_API_KEY}&channelId={channel_id}&part=snippet,id&order=date&maxResults={max_results}"
     response = requests.get(url)
     videos = response.json().get('items', [])
-    return [v['id']['videoId'] for v in videos if v['id']['kind'] == 'youtube#video']
+    
+    valid_videos = []
+    for v in videos:
+        if v['id']['kind'] == 'youtube#video':
+            title = v['snippet']['title']
+            channel_title = v['snippet']['channelTitle']
+            video_id = v['id']['videoId']
+            if "icodeguru" in channel_title.lower():  # ✅ Extra validation
+                valid_videos.append((video_id, title))
+    return valid_videos
 
-# --- FUNCTION: Get video transcripts ---
-def get_video_transcripts(video_ids):
-    all_transcripts = []
-    for vid in video_ids:
+
+# --- Get video transcripts ---
+def get_video_transcripts(video_info):
+    results = []
+    for vid, title in video_info:
         try:
             transcript = YouTubeTranscriptApi.get_transcript(vid)
             text = " ".join([t['text'] for t in transcript])
-            all_transcripts.append(text)
-        except:
+            video_link = f"https://www.youtube.com/watch?v={vid}"
+            results.append({
+                "video_id": vid,
+                "title": title,
+                "link": video_link,
+                "transcript": text
+            })
+        except Exception as e:
             continue
-    return all_transcripts
+    return results
 
-# --- NEW FUNCTION: Scrape icode.guru ---
-def scrape_icodeguru(base_url="https://icode.guru", max_pages=5):
+# --- Scrape icode.guru ---
+def scrape_icodeguru(base_url=BASE_URL, max_pages=5):
     visited = set()
     blocks = []
 
@@ -49,7 +65,7 @@ def scrape_icodeguru(base_url="https://icode.guru", max_pages=5):
             soup = BeautifulSoup(res.content, "html.parser")
             page_text = soup.get_text(separator=" ", strip=True)
             if len(page_text) > 100:
-                blocks.append(f"[Source]({url}):\n{page_text[:2000]}")
+                blocks.append(f"[{url}]({url}):\n{page_text[:1500]}")
             for link in soup.find_all("a", href=True):
                 href = link['href']
                 if href.startswith("/"):
@@ -62,30 +78,36 @@ def scrape_icodeguru(base_url="https://icode.guru", max_pages=5):
     crawl(base_url)
     return blocks
 
-# --- FUNCTION: Ask Groq API using official client ---
+# --- Ask Groq ---
 def ask_groq(context, question):
     messages = [
-        {"role": "system", "content": "You are a helpful assistant. Only answer using the given context (YouTube + icode.guru). Provide links if possible."},
-        {"role": "user", "content": f"Context:\n{context}\n\nQuestion: {question}\nAnswer:"}
+        {"role": "system", "content": "You are a helpful assistant. Always provide relevant video and website links if possible."},
+        {"role": "user", "content": f"Context:\n{context}\n\nQuestion: {question}\nAnswer (include links):"}
     ]
     chat_completion = groq_client.chat.completions.create(
-        model="llama-3.3-70b-versatile",  # Or the model you have access to
+        model="llama-3.3-70b-versatile",
         messages=messages,
     )
     return chat_completion.choices[0].message.content.strip()
 
-# --- STREAMLIT APP ---
+#--- STREAMLIT APP ---
 def main():
-    st.set_page_config(page_title="EduBot - YouTube + iCodeGuru QA", layout="wide")
+    st.set_page_config(page_title="EduBot for iCodeGuru", layout="wide")
     st.title("🎓 EduBot for @icodeguru0")
-    st.markdown("Ask anything based on the channel’s recent videos and website content from [icode.guru](https://icode.guru).")
+    st.markdown("Ask anything based on the latest YouTube videos and website content of [icode.guru](https://icode.guru).")
 
-    question = st.text_input("💬 Ask your question here:")
+    question = st.text_input("💬 Ask your question:")
     if question:
-        with st.spinner("🔍 Fetching videos and transcripts..."):
-            video_ids = get_latest_video_ids(channel_id)
-            transcripts = get_video_transcripts(video_ids)
-            yt_context = "\n\n".join(transcripts)
+        with st.spinner("📺 Fetching YouTube videos..."):
+            video_info = get_latest_video_ids(channel_id, max_results=5)
+            transcripts = get_video_transcripts(video_info)
+
+        yt_context = ""
+        relevant_links = []
+        for vid in transcripts:
+            yt_context += f"\n\n[Video: {vid['title']}]({vid['link']}):\n{vid['transcript'][:1500]}"
+            if question.lower() in vid['transcript'].lower():
+                relevant_links.append(vid['link'])
 
         with st.spinner("🌐 Scraping icode.guru..."):
             site_blocks = scrape_icodeguru(BASE_URL, max_pages=5)
@@ -95,10 +117,18 @@ def main():
 
         with st.spinner("🧠 Thinking..."):
             answer = ask_groq(full_context, question)
+
         st.success(answer)
 
+        if relevant_links:
+            st.markdown("### 🔗 Related YouTube Links")
+            for link in relevant_links:
+                st.markdown(f"- [Watch Video]({link})")
+
     st.markdown("---")
-    st.caption("Powered by YouTube + iCodeGuru + Groq | Built for @icodeguru0")
+    st.caption("Powered by YouTube, iCodeGuru, and Groq")
 
 if __name__ == "__main__":
     main()
+
+
