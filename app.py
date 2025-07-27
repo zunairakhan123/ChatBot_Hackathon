@@ -1,3 +1,4 @@
+
 import nest_asyncio
 import streamlit as st
 import os
@@ -5,16 +6,31 @@ import requests
 from youtube_transcript_api import YouTubeTranscriptApi
 from groq import Groq
 from bs4 import BeautifulSoup
+from sentence_transformers import SentenceTransformer
+import chromadb
+from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunction
 
 nest_asyncio.apply()
 
 # --- CONFIGURATION ---
 YOUTUBE_API_KEY = os.environ.get("YOUTUBE_API_KEY")
 GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
-channel_id = "UCsv3kmQ5k1eIRG2R9mWN"  # iCodeGuru
+channel_id="UCsv3kmQ5k1eIRG2R9mWN-QA"  #channelId
+
 BASE_URL = "https://icode.guru"
 
 groq_client = Groq(api_key=GROQ_API_KEY)
+embedding_function = SentenceTransformerEmbeddingFunction("all-MiniLM-L6-v2")
+
+chroma_client = chromadb.Client()
+collection = chroma_client.get_or_create_collection("icodeguru_knowledge", embedding_function=embedding_function)
+
+# --- Search persistent vector DB ---
+def search_vector_data(query):
+    results = collection.query(query_texts=[query], n_results=3)
+    if results and results["documents"]:
+        return "\n\n".join([doc for doc in results["documents"][0]])
+    return None
 
 # --- Fetch recent video IDs from YouTube channel ---
 def get_latest_video_ids(channel_id, max_results=5):
@@ -28,10 +44,9 @@ def get_latest_video_ids(channel_id, max_results=5):
             title = v['snippet']['title']
             channel_title = v['snippet']['channelTitle']
             video_id = v['id']['videoId']
-            if "icodeguru" in channel_title.lower():  # ✅ Extra validation
+            if "icodeguru" in channel_title.lower():
                 valid_videos.append((video_id, title))
     return valid_videos
-
 
 # --- Get video transcripts ---
 def get_video_transcripts(video_info):
@@ -47,7 +62,7 @@ def get_video_transcripts(video_info):
                 "link": video_link,
                 "transcript": text
             })
-        except Exception as e:
+        except:
             continue
     return results
 
@@ -85,7 +100,7 @@ def ask_groq(context, question):
         {"role": "user", "content": f"Context:\n{context}\n\nQuestion: {question}\nAnswer (include links):"}
     ]
     chat_completion = groq_client.chat.completions.create(
-        model="llama-3.3-70b-versatile",
+        model="llama3-8b-8192",
         messages=messages,
     )
     return chat_completion.choices[0].message.content.strip()
@@ -96,39 +111,45 @@ def main():
     st.title("🎓 EduBot for @icodeguru0")
     st.markdown("Ask anything based on the latest YouTube videos and website content of [icode.guru](https://icode.guru).")
 
-    question = st.text_input("💬 Ask your question:")
-    if question:
-        with st.spinner("📺 Fetching YouTube videos..."):
-            video_info = get_latest_video_ids(channel_id, max_results=5)
-            transcripts = get_video_transcripts(video_info)
+    user_question = st.text_input("💬 Ask your question:")
 
-        yt_context = ""
-        relevant_links = []
-        for vid in transcripts:
-            yt_context += f"\n\n[Video: {vid['title']}]({vid['link']}):\n{vid['transcript'][:1500]}"
-            if question.lower() in vid['transcript'].lower():
-                relevant_links.append(vid['link'])
+    if user_question:
+        # Try vector DB first
+        vector_context = search_vector_data(user_question)
+        if vector_context:
+            with st.spinner("🧠 Answering from knowledge base..."):
+                answer = ask_groq(vector_context, user_question)
+                st.success(answer)
+        else:
+            # Fallback to real-time data
+            with st.spinner("📺 Fetching YouTube videos..."):
+                video_info = get_latest_video_ids(channel_id, max_results=5)
+                transcripts = get_video_transcripts(video_info)
 
-        with st.spinner("🌐 Scraping icode.guru..."):
-            site_blocks = scrape_icodeguru(BASE_URL, max_pages=5)
-            site_context = "\n\n".join(site_blocks)
+            yt_context = ""
+            relevant_links = []
+            for vid in transcripts:
+                yt_context += f"\n\n[Video: {vid['title']}]({vid['link']}):\n{vid['transcript'][:1500]}"
+                if user_question.lower() in vid['transcript'].lower():
+                    relevant_links.append(vid['link'])
 
-        full_context = yt_context + "\n\n" + site_context
+            with st.spinner("🌐 Scraping icode.guru..."):
+                site_blocks = scrape_icodeguru(BASE_URL, max_pages=5)
+                site_context = "\n\n".join(site_blocks)
 
-        with st.spinner("🧠 Thinking..."):
-            answer = ask_groq(full_context, question)
+            full_context = yt_context + "\n\n" + site_context
 
-        st.success(answer)
+            with st.spinner("🧠 Thinking..."):
+                answer = ask_groq(full_context, user_question)
+                st.success(answer)
 
-        if relevant_links:
-            st.markdown("### 🔗 Related YouTube Links")
-            for link in relevant_links:
-                st.markdown(f"- [Watch Video]({link})")
+            if relevant_links:
+                st.markdown("### 🔗 Related YouTube Links")
+                for link in relevant_links:
+                    st.markdown(f"- [Watch Video]({link})")
 
     st.markdown("---")
     st.caption("Powered by YouTube, iCodeGuru, and Groq")
 
 if __name__ == "__main__":
     main()
-
-
