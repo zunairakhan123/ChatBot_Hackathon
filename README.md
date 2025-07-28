@@ -39,15 +39,15 @@ Whether you're a beginner or an experienced coder, ICodeGuru is your personal AI
 ---
 
 ## 🔄 Team & Roles
-**Team Name: Team Beta**
-**1.Muhammad Talha Ehtisham**
-Team Lead (Al dev)
-**2.Zunaira Hawwar**
-LangChain Specialist (RAG flow)
-**3.Memuna Gul**
-Data Science (Data pipeline)
-**4.Ilsa Faisal & Ahmad Ayaz**
-Backend Devs (Integration & management)
-**5.Hassam Aziz**
-Frontend Designer (UI/UX)
+- **Team Name: Team Beta**
+- **1.Muhammad Talha Ehtisham**
+- Team Lead (Al dev)
+- **2.Zunaira Hawwar**
+- LangChain Specialist (RAG flow)
+- **3.Memuna Gul**
+- Data Science (Data pipeline)
+- **4.Ilsa Faisal & Ahmad Ayaz**
+- Backend Devs (Integration & management)
+- **5.Hassam Aziz**
+- Frontend Designer (UI/UX)
 
