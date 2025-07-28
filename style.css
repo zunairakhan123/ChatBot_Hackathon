@@ -1,0 +1,230 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+html, body, [class*="css"] {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* Hide Streamlit elements if needed */
+/*
+#MainMenu { visibility: hidden; }
+footer { visibility: hidden; }
+header { visibility: hidden; }
+*/
+
+.main .block-container {
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+    max-width: 80%;
+}
+
+/* Logo styling */
+.chatbot-logo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ccc;
+    margin-right: 15px;
+    vertical-align: middle;
+}
+
+/* Custom header */
+.custom-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 60%);
+    padding: 1rem;
+    margin-bottom: 20px;
+    border-radius: 16px;
+    text-align: center;
+    color: white;
+    box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);
+}
+
+.custom-header h1 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Response box styling (fallback for inline styles) */
+.response-box {
+    border: 1px solid #e8e8e8;
+    border-radius: 12px;
+    margin: 1rem 0;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04), 0 1px 3px rgba(0,0,0,0.06);
+    font-family: 'Inter', sans-serif;
+    background-color: #fafafa;
+}
+
+.response-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f5f7f8;
+    padding: 0.8rem 1rem;
+    font-size: 1rem;
+    color: #333;
+    font-weight: 500;
+}
+
+.response-content {
+    background: #ffffff;
+    padding: 1rem;
+    max-height: 240px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+    scroll-behavior: smooth;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #2c2c2c;
+    line-height: 1.6;
+    border: none;
+    border-radius: 0;
+    margin-top: 0;
+    font-weight: 400;
+}
+
+/* Scrollbar styling for response content */
+.response-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.response-content::-webkit-scrollbar-thumb {
+    background-color: #d0d0d0;
+    border-radius: 3px;
+}
+
+.response-content::-webkit-scrollbar-thumb:hover {
+    background-color: #b8b8b8;
+}
+
+.response-content::-webkit-scrollbar-track {
+    background-color: #f8f8f8;
+    border-radius: 3px;
+}
+
+/* Firefox scrollbar */
+.response-content {
+    scrollbar-width: thin;
+    scrollbar-color: #d0d0d0 #f8f8f8;
+}
+
+.copy-button {
+    background: #e8e8e8;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 6px 12px;
+    transition: background-color 0.2s ease;
+    color: #555;
+}
+
+.copy-button:hover {
+    background-color: #dcdcdc;
+}
+
+.copy-button:active {
+    background-color: #d0d0d0;
+}
+
+/* Chat container */
+.chat-container {
+    position: relative;
+    width: 100%;
+    margin: 1rem 0;
+}
+
+/* Toast notification */
+.custom-toast {
+    visibility: hidden;
+    min-width: 220px;
+    margin-left: -110px;
+    background-color: #4CAF50;
+    color: #fff;
+    text-align: center;
+    border-radius: 8px;
+    padding: 12px;
+    position: fixed;
+    z-index: 9999;
+    left: 50%;
+    bottom: 50px;
+    font-size: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.custom-toast.show {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Typing animation */
+.typing-indicator {
+    color: #666;
+    font-size: 14px;
+    font-style: italic;
+}
+
+.cursor {
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .main .block-container {
+        max-width: 95%;
+        padding-top: 0.5rem;
+    }
+    
+    .custom-header h1 {
+        font-size: 1.5rem;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .chatbot-logo {
+        width: 50px;
+        height: 50px;
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+    
+    .response-box {
+        margin: 0.5rem 0;
+    }
+    
+    .response-header {
+        padding: 0.6rem;
+        font-size: 0.9rem;
+    }
+    
+    .response-content {
+        padding: 0.8rem;
+        max-height: 200px;
+    }
+    
+    .copy-button {
+        padding: 4px 8px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Streamlit specific overrides */
+.stChatMessage {
+    padding: 1rem 0;
+}
+
+.stChat
