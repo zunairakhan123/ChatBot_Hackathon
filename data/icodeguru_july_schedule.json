@@ -1,0 +1,120 @@
+[
+  {
+    "Month": "July",
+    "Available sessions": [
+      {
+        "time": "6:00 AM – 7:00 AM",
+        "title": "Free IELTS Prep for Fully Funded Scholarships"
+      },
+      {
+        "time": "7:00 AM – 8:00 AM",
+        "title": "Free IELTS Prep for Fully Funded Scholarships III"
+      },
+      {
+        "time": "9:00 AM – 10:00 AM",
+        "title": "IELTS Prep for Fully Funded Scholarships III"
+      },
+      {
+        "time": "10:00 AM – 11:00 AM",
+        "title": "Free IELTS Prep for Fully Funded Scholarships III"
+      },
+      {
+        "time": "11:00 AM – 12:00 PM",
+        "title": "Duolingo Prep Course For Fully Funded Scholarships"
+      },
+      {
+        "time": "3:00 PM – 4:00 PM",
+        "title": "Free IELTS Prep for Fully Funded Scholarships II"
+      },
+      {
+        "time": "4:00 PM – 5:00 PM",
+        "title": "Free IELTS Prep for Fully Funded Scholarships"
+      },
+      {
+        "time": "6:00 PM – 7:00 PM",
+        "title": "Free Duolingo Prep for Fully Funded Scholarships"
+      },
+      {
+        "time": "9:00 PM – 10:00 PM",
+        "title": "GRE Verbal Prep for Fully Funded Scholarships"
+      },
+      {
+        "time": "10:00 PM – 11:00 PM",
+        "title": "Free IELTS Prep for Fully Funded Scholarships I"
+      },
+      {
+        "time": "11:00 PM – 12:00 AM",
+        "title": "Duolingo Prep for Fully Funded Scholarships"
+      }
+    ]
+  },
+  {
+    "Month": "July",
+    "Available sessions": [
+      {
+        "time": "5:00 AM – 6:00 AM",
+        "title": "Cracking the FAANG Interview Prep Summer BootCamp I"
+      },
+      {
+        "time": "5:00 AM – 6:00 AM",
+        "title": "Simplifying LeetCode Hard with Strategies BootCamp II"
+      },
+      {
+        "time": "7:00 AM – 8:00 AM",
+        "title": "Mastery in NeetCode"
+      },
+      {
+        "time": "7:30 AM – 8:30 AM",
+        "title": "Computer Skills Training for High School"
+      },
+      {
+        "time": "11:00 AM – 12:00 PM",
+        "title": "Data Structures and Algorithms For Beginners"
+      },
+      {
+        "time": "12:00 PM – 1:00 PM",
+        "title": "Learn DSA from Scratch"
+      },
+      {
+        "time": "1:00 PM – 2:00 PM",
+        "title": "Leetcode Practice For FAANG"
+      },
+      {
+        "time": "3:00 PM – 4:00 PM",
+        "title": "Cracking the FAANG Interview Prep Summer BootCamp II"
+      },
+      {
+        "time": "3:00 PM – 4:00 PM",
+        "title": "Simplifying LeetCode Hard with Strategies BootCamp I"
+      },
+      {
+        "time": "5:00 PM – 6:00 PM",
+        "title": "Python Crash Course"
+      },
+      {
+        "time": "6:00 PM – 7:00 PM",
+        "title": "Python for Mathematics & Physics"
+      },
+      {
+        "time": "7:00 PM – 8:00 PM",
+        "title": "Python & AI BootCamp Cohort II"
+      },
+      {
+        "time": "8:00 PM – 9:00 PM",
+        "title": "Practice Session PAK Angels Generative AI Training Program COHORT II"
+      },
+      {
+        "time": "9:00 PM – 10:00 PM",
+        "title": "DSA for Beginners"
+      },
+      {
+        "time": "10:00 PM – 11:00 PM",
+        "title": "Mastering JavaScript & React"
+      },
+      {
+        "time": "10:00 PM – 11:00 PM",
+        "title": "Python for Absolute Beginners"
+      }
+    ]
+  }
+]
