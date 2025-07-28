@@ -1,0 +1,30 @@
+{
+  "page": "Team",
+  "members": [
+    {
+      "name": "Dr. Zafar Shahid",
+      "position": "President",
+      "linkedin": "https://www.linkedin.com/in/zafarshahid/"
+    },
+    {
+      "name": "Rizwan Ghaffar",
+      "position": "Senior Vice President",
+      "linkedin": "https://www.linkedin.com/in/rizwan-ghaffar-8283231a/"
+    },
+    {
+      "name": "Kaleem Anwar",
+      "position": "Senior Vice President",
+      "linkedin": "https://www.linkedin.com/in/kaleemanwar/"
+    },
+    {
+      "name": "Amir Khan",
+      "position": "VP Branding & Marketing",
+      "linkedin": "https://www.linkedin.com/in/the-amir-khan/"
+    },
+    {
+      "name": "Khalid Khokhar",
+      "position": "VP Public Affairs",
+      "linkedin": "https://www.linkedin.com/in/khalid-khokhar-3597965/"
+    }
+  ]
+}
