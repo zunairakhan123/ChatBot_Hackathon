@@ -1,0 +1,29 @@
+{
+  "page": "Alumni",
+  "description": "iCodeGuru works at scale and has a lot of students. We don't keep track of all our students but here are some of our notable alumni.",
+  "alumni": [
+    { "name": "Muhammad Talha", "linkedin": "https://www.linkedin.com/in/engrtm/" },
+    { "name": "Azib Farooq", "linkedin": "https://www.linkedin.com/in/itsazibfarooq/" },
+    { "name": "Asif Rasool", "linkedin": "https://www.linkedin.com/in/asifrasool573/" },
+    { "name": "Huma Jamil", "linkedin": "https://www.linkedin.com/in/humajamil/" },
+    { "name": "Saira Gillani", "linkedin": "https://www.linkedin.com/in/saira-gillani/" },
+    { "name": "Iqbal Khatoon", "linkedin": "https://www.linkedin.com/in/iqbalkhatoon/" },
+    { "name": "Rehmana Younis", "linkedin": "https://www.linkedin.com/in/rehmana-younis/" },
+    { "name": "Muhammad Ayiaz", "linkedin": "https://www.linkedin.com/in/muhammad-ayiaz-6a6497232/" },
+    { "name": "Zubair Zafar", "linkedin": "https://www.linkedin.com/in/zubair480/" },
+    { "name": "Shaheer Khan", "linkedin": "https://www.linkedin.com/in/khan-shaheer/" },
+    { "name": "Afsheen Ghuman", "linkedin": "https://www.linkedin.com/in/afsheenghuman/" },
+    { "name": "Nimra Safdar", "linkedin": "https://www.linkedin.com/in/nimra-safdar/" },
+    { "name": "Aimen Sadaat", "linkedin": "https://www.linkedin.com/in/aimensadat/" },
+    { "name": "Ahmad Jajja", "linkedin": "https://www.linkedin.com/in/ahmad-jajja/" },
+    { "name": "Faraz Shoaib", "linkedin": "https://www.linkedin.com/in/faraz-shoaib-55368a19a/" },
+    { "name": "Hafsa Raza", "linkedin": "https://www.linkedin.com/in/hafsaraza/" },
+    { "name": "Fiza Ashraf", "linkedin": "https://www.linkedin.com/in/fiza-ashraf/" },
+    { "name": "Tanish Kumar", "linkedin": "https://www.linkedin.com/in/tanish-kumar-/" },
+    { "name": "Mohammad Shaheer", "linkedin": "https://www.linkedin.com/in/mohammad-shaheer-94888a164/" },
+    { "name": "Mohsin Rasheed", "linkedin": "https://www.linkedin.com/in/mohsin-rasheed-quaidian/" },
+    { "name": "Faisal Latif", "linkedin": "https://www.linkedin.com/in/faisal-latif-549936229/" },
+    { "name": "Maria Baloch", "linkedin": "https://www.linkedin.com/in/mariabaloch/" },
+    { "name": "Kaneez Fatima", "linkedin": "https://www.linkedin.com/in/kaneezfatima117/" }
+  ]
+}
