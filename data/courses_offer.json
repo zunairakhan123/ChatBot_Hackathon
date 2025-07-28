@@ -1,0 +1,34 @@
+{
+  "page": "Course Offer",
+  "description": "Teaching Students 100 Percent Free programming, under the guidance of Silicon Valley Engineers.",
+  "courses": [
+    {
+      "title": "Weekly Webinars",
+      "description": "We conduct weekly webinars every Saturday at 9:00 PM PKT to help students interact with Silicon Valley Engineers."
+    },
+    {
+      "title": "Data Structures and Algorithms",
+      "description": "If you want to boost your learning, you should learn skills in a cohort. We provide many cohorts so you can engage with others to enhance your skills."
+    },
+    {
+      "title": "Career Services",
+      "description": "Get your CV, Statement of Purpose, LinkedIn reviewed by our experts for free."
+    },
+    {
+      "title": "Hackathon Announcement",
+      "description": "Our dedicated team is responsible for announcing webinars every month."
+    },
+    {
+      "title": "Machine Learning / Data Science Announcement",
+      "description": "Learn emerging technologies in cohort to maximize your learning journey."
+    },
+    {
+      "title": "Full Stack Web & App Development Courses",
+      "description": "Advanced courses of Website and Application development are taught by industry experts."
+    },
+    {
+      "title": "IELTS & GRE Classes",
+      "description": "Prepare IELTS & GRE for 100 percent free to avail international opportunities."
+    }
+  ]
+}
